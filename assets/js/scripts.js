@@ -1,8 +1,8 @@
-const input = document.querySelector("#input");
+const input = document.getElementById("input");
 const select = document.querySelector(".select");
 const result = document.querySelector(".result");
-const button = document.querySelector("#button");
-const graph = document.querySelector("#myChart");
+const button = document.getElementById("button");
+const graph = document.getElementById("myChart");
 
 let html = "<option value='selected'>Seleccione</option>";
 let indicador_grafica = null;
@@ -33,18 +33,18 @@ async function ultimos10Valores(moneda) {
     const indicador = await fetch(`https://mindicador.cl/api/${moneda}`);
     const data = await indicador.json();
     indicador_grafica = await data.serie.slice(0, 10).reverse();
-    ultimo_valor = Number(
-      parseInt(indicador_grafica[indicador_grafica.length - 1]["valor"])
-    );
+    ultimo_valor = Number(indicador_grafica[indicador_grafica.length-1].valor);
     fechas = [];
     valores = [];
     indicador_grafica.forEach((elemento) => {
-      fechas.push(elemento.fecha);
+      const fecha = new Date(elemento.fecha);
+      const dia = fecha.getDate().toString().padStart(2, "0");
+      const mes = (fecha.getMonth() + 1).toString().padStart(2, "0");
+      const año = fecha.getFullYear().toString().substr(-2);
+      const fechaFormateada = `${dia}-${mes}-${año}`;
+      fechas.push(fechaFormateada);
       valores.push(parseInt(elemento.valor));
     });
-    for (let i = 0; i < fechas.length; i++) {
-      fechas[i] = fechas[i].slice(0, 10).split("-").reverse().join("-");
-    }
   } catch (error) {
     alert(error.message);
   }
