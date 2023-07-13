@@ -1,5 +1,8 @@
-.containerGrafico {
-    max-width: 800px;
-    text-align: center;
-    margin: 0 auto;
+body{
+    background-color: coral;
+    
+}
+.card{
+   
+    background-color: rgb(160, 108, 95);
 }
